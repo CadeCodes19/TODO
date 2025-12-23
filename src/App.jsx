@@ -3,13 +3,24 @@ import ListItems from "./components/ListItems.jsx";
 
 const App = () => {
   const [tasks, setTasks] = useState([
-    { id: 1, title: "Buy groceries", completed: false },
-    { id: 2, title: "Walk the dog", completed: true },
-    { id: 3, title: "Read a book", completed: false },
+    { id: crypto.randomUUID(), title: "Buy groceries", completed: false },
+    { id: crypto.randomUUID(), title: "Walk the dog", completed: true },
+    { id: crypto.randomUUID(), title: "Read a book", completed: false },
   ]);
   const [newTask, setNewTask] = useState("");
 
-  const handleAdd = () => {};
+  const handleAdd = () => {
+    if (newTask.trim() !== "") {
+      setTasks((prev) => [
+        ...prev,
+        { id: crypto.randomUUID(), title: newTask, completed: false },
+      ]);
+    }
+  };
+
+  const deleteTask = (id) => {
+    setTasks((prev) => prev.filter((task) => task.id !== id));
+  };
   return (
     <section className="">
       <div className="flex flex-col items-center justify-center gap-8 max-w-sm">
@@ -22,7 +33,7 @@ const App = () => {
             type="text"
           />
           <button
-            onClick={() => handleAdd}
+            onClick={handleAdd}
             className="bg-white text-black px-4 py-1 rounded-lg"
           >
             Add Task
@@ -32,7 +43,7 @@ const App = () => {
         <div className="min-h-[50vh] bg-white text-black w-full p-4 rounded-lg">
           <ul className="flex flex-col gap-4">
             {tasks.map((task) => (
-              <ListItems key={task.id} task={task} />
+              <ListItems key={task.id} task={task} onDelete={deleteTask} />
             ))}
           </ul>
         </div>
