@@ -6,6 +6,21 @@
   }
 
   h1 {
-    @apply text-5xl font-bold font-mono;
+    @apply text-5xl font-bold;
   }
+
+  body {
+    @apply font-poppins;
+  }
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url(/public/fonts/Poppins-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@theme {
+  --font-poppins: "Poppins", sans-serif;
 }

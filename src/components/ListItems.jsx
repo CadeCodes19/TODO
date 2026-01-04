@@ -1,10 +1,9 @@
-import React from "react";
 import upIcon from "../assets/up.svg";
 import downIcon from "../assets/down.svg";
 
-const ListItems = ({ task, onDelete }) => {
+const ListItems = ({ task, onDelete, onMoveUp, onMoveDown }) => {
   return (
-    <li className="flex justify-around items-center bg-gray-100 p-2 rounded-lg">
+    <li className="flex justify-around items-center bg-gray-100 p-4 rounded-lg shadow-md">
       <input className="cursor-pointer" type="checkbox" />
       {task.title}
       <button
@@ -13,8 +12,18 @@ const ListItems = ({ task, onDelete }) => {
       >
         Delete
       </button>
-      <img className="size-6 cursor-pointer" src={upIcon} alt="Up" />
-      <img className="size-6 cursor-pointer" src={downIcon} alt="Down" />
+      <img
+        className="size-6 cursor-pointer"
+        src={upIcon}
+        alt="Up"
+        onClick={() => onMoveUp(task.id)}
+      />
+      <img
+        className="size-6 cursor-pointer"
+        src={downIcon}
+        alt="Down"
+        onClick={() => onMoveDown(task.id)}
+      />
     </li>
   );
 };

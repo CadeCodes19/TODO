@@ -21,12 +21,35 @@ const App = () => {
   const deleteTask = (id) => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   };
+
+  const moveUp = (id) => {
+    setTasks((prev) => {
+      const index = prev.findIndex((task) => task.id === id);
+      if (index <= 0) return prev;
+
+      const moved = [...prev];
+      [moved[index], moved[index - 1]] = [moved[index - 1], moved[index]];
+
+      return moved;
+    });
+  };
+  const moveDown = (id) => {
+    setTasks((prev) => {
+      const index = prev.findIndex((task) => task.id === id);
+      if (index >= prev.length - 1) return prev;
+
+      const moved = [...prev];
+      [moved[index], moved[index + 1]] = [moved[index + 1], moved[index]];
+
+      return moved;
+    });
+  };
   return (
-    <section className="">
+    <section className="bg-[url('/public/notebook-for-todo.jpg')] bg-cover bg-center">
       <div className="flex flex-col items-center justify-center gap-8 max-w-sm">
         <h1>To Do List:</h1>
 
-        <div className="flex gap-4 justify-center items-center">
+        <div className="flex gap-2 justify-center items-center">
           <input
             onChange={(e) => setNewTask(e.target.value)}
             className="bg-white text-black p-1 rounded-lg"
@@ -40,10 +63,16 @@ const App = () => {
           </button>
         </div>
 
-        <div className="min-h-[50vh] bg-white text-black w-full p-4 rounded-lg">
+        <div className="min-h-[50vh] bg-linear-to-b from-white to-gray-200 text-black w-full p-4 rounded-lg">
           <ul className="flex flex-col gap-4">
             {tasks.map((task) => (
-              <ListItems key={task.id} task={task} onDelete={deleteTask} />
+              <ListItems
+                key={task.id}
+                task={task}
+                onDelete={deleteTask}
+                onMoveUp={moveUp}
+                onMoveDown={moveDown}
+              />
             ))}
           </ul>
         </div>
